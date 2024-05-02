@@ -38,6 +38,15 @@ class Snake extends JComponent{
         getBody().add(0, newHead)
     }
 
+    boolean isHeadInBody(int[] head) {
+        for (int i = 0; i < this.body.size(); i++) {
+            if (head[0] == this.body[i][0] && head[1] == this.body[i][1]) {
+                return true
+            }
+        }
+        return false
+    }
+
     void removeTail() {
         getBody().removeAt(body.size() - 1)
     }

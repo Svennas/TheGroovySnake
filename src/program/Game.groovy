@@ -72,13 +72,15 @@ class Game extends JComponent {
                 newHead[0] > getGridWidth() - 1 ||
                 newHead[1] < 1 ||
                 newHead[1] > getGridHeight() - 1 ||
-                getSnake().getBody().contains(newHead))
+                getSnake().getBody().contains(newHead) ||
+                getSnake().isHeadInBody(newHead))
         {
             getTimer().stop()
             getGameBoard().updateScore(getScore())
             getGameBoard().gameOverMessage()
             return
         }
+
         getSnake().addToHead(newHead)
 
         if (getApple().isHeadAtApple(newHead)) {
