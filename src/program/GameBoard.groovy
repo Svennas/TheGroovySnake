@@ -26,9 +26,13 @@ class GameBoard extends JFrame implements KeyListener {
         this.areBordersPainted = false
 
         this.setTitle("Snake Game")
-        this.setSize(gridWidth * gridSize + gridSize, gridHeight * gridSize + gridSize)
+        this.setSize(gridWidth * (gridSize + 2), gridHeight * (gridSize + 4))
         this.defaultCloseOperation = EXIT_ON_CLOSE
         this.setLocationRelativeTo(null)
+
+//        this.add(this.apple)
+        this.add(this.snake)
+
 
         this.addKeyListener(this)
         this.setVisible(true)
@@ -42,26 +46,27 @@ class GameBoard extends JFrame implements KeyListener {
     void paint(Graphics g) {
         super.paint(g)
 
-        if (!this.areBordersPainted) {
-            g.color = Color.BLACK
-            for (int x = 0; x < 30; x++) {
-                g.fillRect(x * getGridSize(), 0 * getGridSize(), getGridSize(), getGridSize())
-                g.fillRect(x * getGridSize(), 20 * getGridSize(), getGridSize(), getGridSize())
-            }
-            for (int y = 0; y <= 20; y++) {
-                g.fillRect(0 * getGridSize(), y * getGridSize(), getGridSize(), getGridSize())
-                g.fillRect(30 * getGridSize(), y * getGridSize(), getGridSize(), getGridSize())
-            }
-            setAreBordersPainted(true)
-        }
+//        if (!this.areBordersPainted) {
+//            g.color = Color.BLACK
+//            for (int x = 0; x < 30; x++) {
+//                g.fillRect(x * getGridSize(), 0 * getGridSize(), getGridSize(), getGridSize())
+//                g.fillRect(x * getGridSize(), 20 * getGridSize(), getGridSize(), getGridSize())
+//            }
+//            for (int y = 0; y <= 20; y++) {
+//                g.fillRect(0 * getGridSize(), y * getGridSize(), getGridSize(), getGridSize())
+//                g.fillRect(30 * getGridSize(), y * getGridSize(), getGridSize(), getGridSize())
+//            }
+//            setAreBordersPainted(true)
+//        }
 
-        g.color = getSnake().getColour()
-        for (int[] part : getSnake().getBody()) {
-            g.fillRect(part[0] * getGridSize(), part[1] * getGridSize(), getGridSize(), getGridSize())
-        }
-        g.color = getApple().getColour()
-        g.fillRect(getApple().getPosition()[0] * getGridSize(),
-                getApple().getPosition()[1] * getGridSize(), getGridSize(), getGridSize())
+//        g.color = getSnake().getColour()
+//        for (int[] part : getSnake().getBody()) {
+//            g.fillRect(part[0] * getGridSize(), part[1] * getGridSize(), getGridSize(), getGridSize())
+//        }
+//        g.color = getApple().getColour()
+//        g.fillRect(getApple().getPosition()[0] * getGridSize(),
+//                getApple().getPosition()[1] * getGridSize(), getGridSize(), getGridSize())
+
         g.color = Color.BLACK
         g.drawString("Score: $score", 10, 20)
     }

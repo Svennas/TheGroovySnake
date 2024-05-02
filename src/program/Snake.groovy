@@ -1,16 +1,37 @@
 package program
 
+import javax.swing.JComponent
 import java.awt.Color
+import java.awt.Graphics
 
-class Snake {
+class Snake extends JComponent{
     ArrayList<List<Integer>> body
     def direction
     Color colour
 
-    Snake(ArrayList<List<Integer>> body, String direction, Color colour) {
+    Apple apple
+
+    Snake(ArrayList<List<Integer>> body, String direction, Color colour, Apple apple) {
         this.body = body
         this.direction = direction
         this.colour = colour
+
+        this.apple = apple
+
+        this.setVisible(true)
+    }
+
+    @Override
+    void paint(Graphics g) {
+        super.paint(g)
+
+        g.color = getColour()
+        for (int[] part : getBody()) {
+            g.fillRect(part[0] * 40, part[1] * 40, 40, 40)
+        }
+
+        g.color = getApple().getColour()
+        g.fillRect(getApple().getPosition()[0] * 40, getApple().getPosition()[1] * 40, 40, 40)
     }
 
     void addToHead(int[] newHead) {

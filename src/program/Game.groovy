@@ -1,8 +1,12 @@
 package program
 
+import javax.swing.JComponent
+import javax.swing.JFrame
 import javax.swing.Timer
+import java.awt.Color
+import java.awt.Graphics
 
-class Game {
+class Game extends JComponent {
     def gridSize
     def gridWidth
     def gridHeight
@@ -25,6 +29,26 @@ class Game {
 
         this.timer = new Timer(100, { move() })
         this.timer.start()
+
+        this.setSize(gridWidth * gridSize + gridSize, gridHeight * gridSize + gridSize)
+        this.setVisible(true)
+        this.setLocation(0, 0)
+        this.repaint()
+
+        this.gameBoard.add(this)
+    }
+
+    @Override
+    void paint(Graphics g) {
+        g.color = Color.BLACK
+        for (int x = 0; x < getGridWidth(); x++) {
+            g.fillRect(x * getGridSize(), 0 * getGridSize(), getGridSize(), getGridSize())
+            g.fillRect(x * getGridSize(), getGridHeight() * getGridSize(), getGridSize(), getGridSize())
+        }
+        for (int y = 0; y <= getGridHeight(); y++) {
+            g.fillRect(0 * getGridSize(), y * getGridSize(), getGridSize(), getGridSize())
+            g.fillRect(getGridWidth() * getGridSize(), y * getGridSize(), getGridSize(), getGridSize())
+        }
     }
 
     void move() {
@@ -44,10 +68,10 @@ class Game {
                 newHead[0]++
                 break
         }
-        if (    newHead[0] < 0 ||
-                newHead[0] >= getGridWidth() ||
-                newHead[1] < 0 ||
-                newHead[1] >= getGridHeight() ||
+        if (    newHead[0] < 1 ||
+                newHead[0] > getGridWidth() - 1 ||
+                newHead[1] < 1 ||
+                newHead[1] > getGridHeight() - 1 ||
                 getSnake().getBody().contains(newHead))
         {
             getTimer().stop()
@@ -60,11 +84,14 @@ class Game {
         if (getApple().isHeadAtApple(newHead)) {
             setScore(getScore() + 1)
             getApple().generateApple(getGridWidth(), getGridHeight())
+//            getApple().repaint()
         } else {
             getSnake().removeTail()
         }
         getGameBoard().updateScore(getScore())
         getGameBoard().repaint()
+        getSnake().repaint()
+//        getApple().repaint()
     }
 
     void resetGame(ArrayList<List<Integer>> body, String snakeDirection) {
@@ -78,6 +105,8 @@ class Game {
         getGameBoard().updateScore(getScore())
         getGameBoard().setIsGameOver(false)
         getGameBoard().repaint()
+        getSnake().repaint()
+//        getApple().repaint()
 
         getTimer().start()
     }
